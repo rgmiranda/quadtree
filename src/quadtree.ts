@@ -48,4 +48,21 @@ export class QuadTree {
             new QuadTree(this.k, new Rect(x, y + h * 0.5, w * 0.5, h * 0.5)),
         ];
     }
+
+    draw(ctx: CanvasRenderingContext2D): void {
+        ctx.beginPath();
+        ctx.rect(this.boundary.x, this.boundary.y, this.boundary.w, this.boundary.h);
+        ctx.stroke();
+
+        this.points.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+        });
+
+        if (this.quadrants) {
+            this.quadrants.forEach(q => q.draw(ctx));
+        }
+    }
 }
