@@ -17,11 +17,47 @@ describe(Rect.name, () => {
         { x: -0.001, y: 0, expected: false },
     ];
 
+    const intersectionData = [
+        {
+            rect: new Rect(0, 0, 12, 12),
+            expected: true
+        },
+        {
+            rect: new Rect(0, 0, 6, 6),
+            expected: true
+        },
+        {
+            rect: new Rect(2, 2, 6, 6),
+            expected: true
+        },
+        {
+            rect: new Rect(6, 6, 12, 12),
+            expected: true
+        },
+        {
+            rect: new Rect(-12, -12, 6, 6),
+            expected: false
+        },
+        {
+            rect: new Rect(-12, -12, 12, 12),
+            expected: false
+        },
+        {
+            rect: new Rect(12, 12, 1, 1),
+            expected: false
+        },
+    ];
+
     it('creates an instance', () => {
         expect(r).toBeInstanceOf(Rect);
     });
     
     it.each(boundaryData)('evaluates boundary', ({ x, y, expected }) => {
         expect(r.containts({ x, y })).toBe(expected);
+    });
+    
+    it.each(intersectionData)('evaluates intersection', ({ rect, expected }) => {
+        expect(r.intersects(rect)).toBe(expected);
+        expect(rect.intersects(r)).toBe(expected);
     });
 });

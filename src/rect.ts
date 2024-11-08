@@ -15,4 +15,11 @@ export class Rect {
             && p.y >= this.y
             && p.y <= this.y + this.h;
     }
+
+    intersects(rect: Rect): boolean {
+        return (this.x + this.w) > rect.x
+            && this.x < (rect.x + rect.w)
+            && (this.y + this.h) > rect.y
+            && this.y < (rect.y + rect.h);
+    }
 }
