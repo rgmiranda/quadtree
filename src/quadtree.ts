@@ -50,9 +50,6 @@ export class QuadTree {
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
-        ctx.beginPath();
-        ctx.rect(this.boundary.x, this.boundary.y, this.boundary.w, this.boundary.h);
-        ctx.stroke();
 
         this.points.forEach(p => {
             ctx.beginPath();
@@ -63,6 +60,31 @@ export class QuadTree {
 
         if (this.quadrants) {
             this.quadrants.forEach(q => q.draw(ctx));
+        } else {
+            ctx.beginPath();
+            ctx.rect(this.boundary.x, this.boundary.y, this.boundary.w, this.boundary.h);
+            ctx.stroke();
         }
+    }
+
+    query(area: Rect) : Point[] {
+        let found: Point[] = [];
+        if (!this.boundary.intersects(area)) {
+            return found;
+        }
+
+        this.points.forEach(p => {
+            if (area.containts(p)) {
+                found.push(p);
+            }
+        });
+
+        if (this.quadrants) {
+            this.quadrants.forEach(q => {
+                found = found.concat(q.query(area));
+            });
+        }
+
+        return found;
     }
 }

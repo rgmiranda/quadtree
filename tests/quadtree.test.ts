@@ -85,4 +85,28 @@ describe(QuadTree.name, () => {
         expect(context.arc).toHaveBeenCalledTimes(5);
         expect(context.rect).toHaveBeenCalledTimes(5);
     });
+
+    it('queries points in an area', () => {
+        const boundary = new Rect(0, 0, 120, 120);
+        const area = new Rect(30, 30, 25, 25);
+        const k = 1;
+        const pts: Point[] = 
+        [
+            { x: 40, y: 40 },
+            { x: 50, y: 50 },
+            { x: 120, y: 40 },
+            { x: 120, y: 120 },
+            { x: 40, y: 120 },
+        ];
+        const q = new QuadTree(k, boundary);
+        
+        expect(q).toBeInstanceOf(QuadTree);
+        
+        pts.forEach(p => q.addPoint(p));
+        const result = q.query(area);
+
+        expect(Array.isArray(result)).toBe(true);
+        expect(result.length).toBe(2);
+
+    });
 });
