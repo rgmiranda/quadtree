@@ -49,24 +49,6 @@ export class QuadTree {
         ];
     }
 
-    draw(ctx: CanvasRenderingContext2D): void {
-
-        this.points.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
-        });
-
-        if (this.quadrants) {
-            this.quadrants.forEach(q => q.draw(ctx));
-        } else {
-            ctx.beginPath();
-            ctx.rect(this.boundary.x, this.boundary.y, this.boundary.w, this.boundary.h);
-            ctx.stroke();
-        }
-    }
-
     query(area: Rect) : Point[] {
         let found: Point[] = [];
         if (!this.boundary.intersects(area)) {
