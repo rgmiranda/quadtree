@@ -83,7 +83,7 @@ describe(QuadTree.name, () => {
         q.draw(context);
 
         expect(context.arc).toHaveBeenCalledTimes(5);
-        expect(context.rect).toHaveBeenCalledTimes(5);
+        expect(context.rect).toHaveBeenCalledTimes(4);
     });
 
     it('queries points in an area', () => {

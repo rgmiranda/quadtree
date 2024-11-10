@@ -1,6 +1,8 @@
+import { Area } from "./area";
+import { Circle } from "./circle";
 import { Point } from "./point";
 
-export class Rect {
+export class Rect implements Area {
     constructor(
         public readonly x: number,
         public readonly y: number,
@@ -16,10 +18,20 @@ export class Rect {
             && p.y <= this.y + this.h;
     }
 
-    intersects(rect: Rect): boolean {
-        return (this.x + this.w) > rect.x
-            && this.x < (rect.x + rect.w)
-            && (this.y + this.h) > rect.y
-            && this.y < (rect.y + rect.h);
+    intersects(area: Area): boolean {
+        if (area instanceof Rect) {
+            return (this.x + this.w) > area.x
+                && this.x < (area.x + area.w)
+                && (this.y + this.h) > area.y
+                && this.y < (area.y + area.h);
+        } else if (area instanceof Circle) {
+            const nx = Math.max(this.x, Math.min(area.x, this.x + this.w));
+            const ny = Math.max(this.y, Math.min(area.y, this.y + this.h));
+            const dx = nx - area.x;
+            const dy = ny - area.y;
+            return area.squaredRadius >= (dx * dx + dy * dy)
+        } else {
+            throw new Error('Unrecognized area type');
+        }
     }
 }
