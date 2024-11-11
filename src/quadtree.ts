@@ -1,3 +1,4 @@
+import { Area } from "./area";
 import { Point } from "./point";
 import { Rect } from "./rect";
 
@@ -49,7 +50,7 @@ export class QuadTree {
         ];
     }
 
-    query(area: Rect) : Point[] {
+    query(area: Area) : Point[] {
         let found: Point[] = [];
         if (!this.boundary.intersects(area)) {
             return found;
